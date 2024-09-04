@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Garage V. Parrot - Administration{% endblock %}
+
+{% block body %}
+<div class="container">
+    <header class="jumbotron text-center mt-4 bg-dark text-white animate__animated animate__fadeInDown">
+        <h1 class="display-4">Panneau d'administration</h1>
+        <p class="lead">Gérez les services, les véhicules et les contacts de votre garage.</p>
+    </header>
+
+    <section class="text-center py-5 animate__animated animate__fadeInUp">
+        <h2 class="mb-4">Gestion des Services</h2>
+        <div class="row">
+            <div class="col-md-4 animate__animated animate__zoomIn" style="animation-delay: 0.2s;">
+                <div class="card border-0 shadow">
+                    <img src="path/to/your/services-management.jpg" class="card-img-top" alt="Gestion des Services">
+                    <div class="card-body">
+                        <h5 class="card-title">Modifier les Services</h5>
+                        <p class="card-text">Ajoutez, modifiez ou supprimez des services proposés par le garage.</p>
+                        {#<a href="{{ path('admin_services') }}" class="btn btn-primary">Gérer les Services</a>#}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 animate__animated animate__zoomIn" style="animation-delay: 0.4s;">
+                <div class="card border-0 shadow">
+                    <img src="path/to/your/vehicles-management.jpg" class="card-img-top" alt="Gestion des Véhicules">
+                    <div class="card-body">
+                        <h5 class="card-title">Gérer les Véhicules</h5>
+                        <p class="card-text">Mettez à jour les informations sur les véhicules d'occasion disponibles.</p>
+                        {#<a href="{{ path('admin_vehicles') }}" class="btn btn-primary">Gérer les Véhicules</a>#}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 animate__animated animate__zoomIn" style="animation-delay: 0.6s;">
+                <div class="card border-0 shadow">
+                    <img src="path/to/your/contact-management.jpg" class="card-img-top" alt="Gestion des Contacts">
+                    <div class="card-body">
+                        <h5 class="card-title">Gérer les Contacts</h5>
+                        <p class="card-text">Consultez et répondez aux messages des clients.</p>
+                        {#<a href="{{ path('admin_contacts') }}" class="btn btn-primary">Gérer les Contacts</a>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="text-center bg-light py-5 animate__animated animate__fadeInUp">
+        <h2 class="mb-4">Statistiques et Rapports</h2>
+        <p class="mb-5">Consultez les statistiques de performance et les rapports d'activité.</p>
+        <div class="row">
+            <div class="col-md-6 animate__animated animate__fadeInLeft">
+                <img src="path/to/your/statistics.jpg" class="img-fluid mb-3" alt="Statistiques">
+            </div>
+            <div class="col-md-6 animate__animated animate__fadeInRight">
+                <img src="path/to/your/reports.jpg" class="img-fluid mb-3" alt="Rapports">
+            </div>
+        </div>
+        {#<a href="{{ path('admin_reports') }}" class="btn btn-primary btn-lg mt-4 animate__animated animate__fadeInUp">Voir les Rapports</a>#}
+    </section>
+
+    <section class="text-center py-5 animate__animated animate__fadeInUp">
+        <h2 class="mb-4">Paramètres du Compte</h2>
+        <p class="mb-5">Modifiez les informations de votre compte ou changez les paramètres administratifs.</p>
+        {#<a href="{{ path('admin_settings') }}" class="btn btn-primary btn-lg animate__animated animate__fadeInUp">Paramètres du Compte</a>#}
+    </section>
+</div>
+{% endblock %}
