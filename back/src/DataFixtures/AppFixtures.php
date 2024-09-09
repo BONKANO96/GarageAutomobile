@@ -6,58 +6,61 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 use Faker\Factory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
     private $faker;
+    private $passwordHasher;
 
-    public function __construct()
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
-        // Initialiser Faker
+        // Initialiser Faker et l'encodeur de mot de passe
         $this->faker = Factory::create();
+        $this->passwordHasher = $passwordHasher;
     }
 
     public function load(ObjectManager $manager): void
     {
-        // Users
+        // Liste des utilisateurs
         $users = [];
 
+        // Création d'un administrateur
         $admin = new User();
-        $admin->setFullName('Bonkano Abdoul')
-            ->setPseudo(null)
-            ->setEmail('bonkano69@gmail.com')
-            ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
-            ->setPlainPassword('Mari1996&&')
-            ->setCreatedAt(new \DateTimeImmutable())
-            ->setUpdatedAt(new \DateTimeImmutable());
-
-        $users = [];
-
-        $admin = new User();
-        $admin->setFullName('Vincent Parrot')
-            ->setPseudo(null)
+        $admin->setFirstName('Vincent')
+            ->setLastName('Parrot')
             ->setEmail('vp@garage.tlse')
             ->setRoles(['ROLE_ADMIN'])
-            ->setPlainPassword('adminpassword')
             ->setCreatedAt(new \DateTimeImmutable())
             ->setUpdatedAt(new \DateTimeImmutable());
+
+        // Encodage du mot de passe de l'admin
+        $hashedPassword = $this->passwordHasher->hashPassword($admin, 'adminpassword');
+        $admin->setPassword($hashedPassword);
+
+        // Enregistrement de l'admin
         $users[] = $admin;
         $manager->persist($admin);
 
+        // Création de 10 utilisateurs avec Faker
         for ($i = 0; $i < 10; $i++) {
             $user = new User();
-            $user->setFullName($this->faker->name())
-                ->setPseudo(mt_rand(0, 1) === 1 ? $this->faker->firstName() : null)
+            $user->setFirstName($this->faker->firstName())
+                ->setLastName($this->faker->lastName())
                 ->setEmail($this->faker->email())
                 ->setRoles(['ROLE_USER'])
-                ->setPlainPassword('password')
                 ->setCreatedAt(new \DateTimeImmutable())
                 ->setUpdatedAt(new \DateTimeImmutable());
+
+            // Encodage du mot de passe pour chaque utilisateur
+            $hashedPassword = $this->passwordHasher->hashPassword($user, 'password');
+            $user->setPassword($hashedPassword);
 
             $users[] = $user;
             $manager->persist($user);
         }
 
+        // Flush pour sauvegarder les utilisateurs en base
         $manager->flush();
     }
 }
