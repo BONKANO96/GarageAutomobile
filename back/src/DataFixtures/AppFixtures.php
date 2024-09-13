@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
+use App\Entity\Service; // Import de l'entité Service
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -60,7 +61,23 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
-        // Flush pour sauvegarder les utilisateurs en base
+        // Création des services proposés par le garage
+        $services = [
+            ['Réparations mécaniques', 'Réparation de tout type de pannes mécaniques pour tous types de véhicules.'],
+            ['Entretien de véhicules', 'Services d’entretien régulier incluant les vidanges, les contrôles des freins, et les révisions.'],
+            ['Vente de véhicules d\'occasion', 'Large gamme de véhicules d’occasion en vente avec contrôle technique assuré.'],
+            ['Prise en charge spéciale', 'Service de prise en charge sur mesure pour répondre aux besoins spécifiques des clients.']
+        ];
+
+        foreach ($services as $serviceData) {
+            $service = new Service();
+            $service->setNom($serviceData[0])
+                    ->setDescription($serviceData[1]);
+
+            $manager->persist($service);
+        }
+
+        // Flush pour sauvegarder les utilisateurs et services en base
         $manager->flush();
     }
 }

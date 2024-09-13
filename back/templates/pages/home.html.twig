@@ -1,3 +1,4 @@
+{# templates/pages/home.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Garage V. Parrot - Accueil{% endblock %}
@@ -7,41 +8,29 @@
     <header class="jumbotron text-center mt-4 bg-primary text-white animate__animated animate__fadeInDown">
         <h1 class="display-4">Bienvenue chez Garage V. Parrot</h1>
         <p class="lead">Votre garage de confiance à Toulouse pour toutes vos réparations automobiles, entretien, et vente de véhicules d'occasion.</p>
-        {#<a class="btn btn-light btn-lg mt-3 animate__animated animate__pulse animate__infinite" href="{{ path('services') }}" role="button">Découvrez Nos Services</a>#}
+        {# <a class="btn btn-light btn-lg mt-3 animate__animated animate__pulse animate__infinite" href="{{ path('services') }}" role="button">Découvrez Nos Services</a> #}
     </header>
 
     <section class="text-center py-5 animate__animated animate__fadeInUp">
         <h2 class="mb-4">Nos Services</h2>
         <div class="row">
-            <div class="col-md-4 animate__animated animate__zoomIn" style="animation-delay: 0.2s;">
-                <div class="card border-0 shadow">
-                    <img src="path/to/your/car-body-repair.jpg" class="card-img-top" alt="Réparation de carrosserie">
-                    <div class="card-body">
-                        <h5 class="card-title">Réparation de Carrosserie</h5>
-                        <p class="card-text">Nous redonnons à votre véhicule son apparence d'origine avec des réparations de qualité.</p>
+            {% for service in services %}
+                <div class="col-md-4 animate__animated animate__zoomIn" style="animation-delay: {{ loop.index * 0.2 }}s;">
+                    <div class="card border-0 shadow">
+                        {#<img src="path/to/your/{{ service.nom|lower|replace({' ': '-'}) }}.jpg" class="card-img-top" alt="{{ service.nom }}">#}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ service.nom }}</h5>
+                            <p class="card-text">{{ service.description }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 animate__animated animate__zoomIn" style="animation-delay: 0.4s;">
-                <div class="card border-0 shadow">
-                    <img src="path/to/your/mechanical-service.jpg" class="card-img-top" alt="Entretien mécanique">
-                    <div class="card-body">
-                        <h5 class="card-title">Entretien Mécanique</h5>
-                        <p class="card-text">Assurez-vous que votre véhicule fonctionne parfaitement grâce à nos services d'entretien.</p>
-                    </div>
+            {% else %}
+                <div class="col-12 text-center">
+                    <p>Aucun service disponible pour le moment.</p>
                 </div>
-            </div>
-            <div class="col-md-4 animate__animated animate__zoomIn" style="animation-delay: 0.6s;">
-                <div class="card border-0 shadow">
-                    <img src="path/to/your/used-car.jpg" class="card-img-top" alt="Véhicules d'occasion">
-                    <div class="card-body">
-                        <h5 class="card-title">Vente de Véhicules d'Occasion</h5>
-                        <p class="card-text">Découvrez notre sélection de véhicules d'occasion rigoureusement inspectés.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
-        {#<a href="{{ path('services') }}" class="btn btn-primary btn-lg mt-4 animate__animated animate__fadeInUp" style="animation-delay: 0.8s;">Voir tous les Services</a>#}
+        {# <a href="{{ path('services') }}" class="btn btn-primary btn-lg mt-4 animate__animated animate__fadeInUp" style="animation-delay: 0.8s;">Voir tous les Services</a> #}
     </section>
 
     <section class="text-center bg-light py-5 animate__animated animate__fadeInUp">
@@ -55,13 +44,13 @@
                 <img src="path/to/your/vehicle2.jpg" class="img-fluid mb-3" alt="Véhicule 2">
             </div>
         </div>
-        {#<a href="{{ path('vehicles') }}" class="btn btn-primary btn-lg mt-4 animate__animated animate__fadeInUp">Voir les Véhicules</a>#}
+        {# <a href="{{ path('vehicles') }}" class="btn btn-primary btn-lg mt-4 animate__animated animate__fadeInUp">Voir les Véhicules</a> #}
     </section>
 
     <section class="text-center py-5 animate__animated animate__fadeInUp">
         <h2 class="mb-4">Contactez-Nous</h2>
         <p class="mb-5">Vous avez des questions ou besoin d'un devis ? N'hésitez pas à nous contacter.</p>
-        {#<a href="{{ path('contact') }}" class="btn btn-primary btn-lg animate__animated animate__fadeInUp">Contactez-nous</a>#}
+        {# <a href="{{ path('contact') }}" class="btn btn-primary btn-lg animate__animated animate__fadeInUp">Contactez-nous</a> #}
     </section>
 </div>
 {% endblock %}
