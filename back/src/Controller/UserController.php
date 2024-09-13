@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class UserController extends AbstractController
 {
     #[Route('/users', name: 'user_index')]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(UserRepository $userRepository): Response
     {
         // Récupérer tous les utilisateurs de la base de données
@@ -26,6 +27,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/users/create', name: 'user_create')]
+    #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         $user = new User();

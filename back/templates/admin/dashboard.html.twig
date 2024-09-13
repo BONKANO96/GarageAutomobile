@@ -6,7 +6,7 @@
 <div class="container">
     <header class="jumbotron text-center mt-4 bg-dark text-white animate__animated animate__fadeInDown">
         <h1 class="display-4">Panneau d'administration</h1>
-        <p class="lead">Gérez les services, les véhicules et les contacts de votre garage.</p>
+        <p class="lead">Gérez les services, les véhicules, les contacts et les utilisateurs de votre garage.</p>
     </header>
 
     <section class="text-center py-5 animate__animated animate__fadeInUp">
@@ -39,6 +39,23 @@
                         <h5 class="card-title">Gérer les Contacts</h5>
                         <p class="card-text">Consultez et répondez aux messages des clients.</p>
                         {#<a href="{{ path('admin_contacts') }}" class="btn btn-primary">Gérer les Contacts</a>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nouvelle section : Gestion des utilisateurs -->
+    <section class="text-center py-5 bg-light animate__animated animate__fadeInUp">
+        <h2 class="mb-4">Gestion des Utilisateurs</h2>
+        <div class="row">
+            <div class="col-md-4 offset-md-4 animate__animated animate__zoomIn" style="animation-delay: 0.8s;">
+                <div class="card border-0 shadow">
+                    <img src="path/to/your/users-management.jpg" class="card-img-top" alt="Gestion des Utilisateurs">
+                    <div class="card-body">
+                        <h5 class="card-title">Gérer les Utilisateurs</h5>
+                        <p class="card-text">Ajouter, modifier ou supprimer les utilisateurs administratifs.</p>
+                        <a href="{{ path('user_index') }}" class="btn btn-primary">Gérer les Utilisateurs</a>
                     </div>
                 </div>
             </div>
