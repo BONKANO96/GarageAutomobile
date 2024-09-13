@@ -3,38 +3,47 @@
 {% block title %}Gestion des Services{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1 class="my-4">Gestion des Services</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">Gestion des Services</h1>
+
+    <!-- Bouton pour revenir à la page admin -->
+    <a href="{{ path('admin') }}" class="btn btn-info mb-4">Retour à l'admin</a>
 
     <a href="{{ path('app_service_create') }}" class="btn btn-primary mb-4">Ajouter un Service</a>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for service in services %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
                 <tr>
-                    <td>{{ service.nom }}</td>
-                    <td>{{ service.description }}</td>
-                    <td>
-                        <a href="{{ path('app_service_edit', { id: service.id }) }}" class="btn btn-secondary btn-sm">Modifier</a>
-                        <form action="{{ path('app_service_delete', { id: service.id }) }}" method="post" style="display:inline;">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ service.id) }}">
-                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
-                        </form>
-                    </td>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Actions</th>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3" class="text-center">Aucun service trouvé</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                    <tr>
+                        <td>{{ service.nom }}</td>
+                        <td>{{ service.description }}</td>
+                        <td>
+                            <div class="d-inline-block">
+                                <a href="{{ path('app_service_edit', { id: service.id }) }}" class="btn btn-secondary btn-sm">Modifier</a>
+                            </div>
+                            <div class="d-inline-block">
+                                <form action="{{ path('app_service_delete', { id: service.id }) }}" method="post" style="display:inline;">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ service.id) }}">
+                                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center">Aucun service trouvé.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}
