@@ -5,7 +5,8 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
-use App\Entity\Service; // Import de l'entité Service
+use App\Entity\Service;
+use App\Entity\OpeningHours; // Import de l'entité OpeningHours
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -77,7 +78,27 @@ class AppFixtures extends Fixture
             $manager->persist($service);
         }
 
-        // Flush pour sauvegarder les utilisateurs et services en base
+        // Création des horaires d'ouverture du garage
+        $openingHoursData = [
+            ['Lundi', '08:00', '18:00'],
+            ['Mardi', '08:00', '18:00'],
+            ['Mercredi', '08:00', '18:00'],
+            ['Jeudi', '08:00', '18:00'],
+            ['Vendredi', '08:00', '18:00'],
+            ['Samedi', '09:00', '16:00'],
+            ['Dimanche', '12:00', '15:00']
+        ];
+
+        foreach ($openingHoursData as $hoursData) {
+            $openingHour = new OpeningHours();
+            $openingHour->setDay($hoursData[0])
+                        ->setOpeningTime($hoursData[1] === 'Fermé' ? null : $hoursData[1])
+                        ->setClosingTime($hoursData[2] === 'Fermé' ? null : $hoursData[2]);
+
+            $manager->persist($openingHour);
+        }
+
+        // Flush pour sauvegarder les utilisateurs, services et horaires en base
         $manager->flush();
     }
 }

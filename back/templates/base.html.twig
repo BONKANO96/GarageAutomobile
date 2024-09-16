@@ -29,5 +29,20 @@
     <div class="container">
         {% block body %}{% endblock %}
     </div>
+    
+
+    <footer>
+        <div class="container">
+            <h5>Horaires d'Ouverture</h5>
+            <ul>
+                {% set opening_hours = get_opening_hours() %}
+                {% for openingHour in opening_hours %}
+                    <li>{{ openingHour.day }}: {{ openingHour.openingTime|date('H:i') }} - {{ openingHour.closingTime|date('H:i') }}</li>
+                {% else %}
+                    <li>Aucun horaire défini.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </footer>
 </body>
 </html>

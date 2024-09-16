@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter Horaires{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Ajouter Horaires d'ouverture</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            {{ form_start(form, { 'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'} }) }}
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        {{ form_label(form.day, 'Jour de la semaine', { 'label_attr': {'class': 'form-label'} }) }}
+                    </div>
+                    <div class="col-md-8">
+                        {{ form_widget(form.day, { 'attr': {'class': 'form-select', 'aria-describedby': 'dayHelp'} }) }}
+                        {{ form_errors(form.day) }}
+                        <div id="dayHelp" class="form-text text-muted">Choisissez le jour de la semaine pour les horaires.</div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        {{ form_label(form.openingTime, 'Heure d\'ouverture', { 'label_attr': {'class': 'form-label'} }) }}
+                    </div>
+                    <div class="col-md-8">
+                        {{ form_widget(form.openingTime, { 'attr': {'class': 'form-select', 'aria-describedby': 'openingTimeHelp'} }) }}
+                        {{ form_errors(form.openingTime) }}
+                        <div id="openingTimeHelp" class="form-text text-muted">Sélectionnez l'heure d'ouverture au format HH:MM.</div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        {{ form_label(form.closingTime, 'Heure de fermeture', { 'label_attr': {'class': 'form-label'} }) }}
+                    </div>
+                    <div class="col-md-8">
+                        {{ form_widget(form.closingTime, { 'attr': {'class': 'form-select', 'aria-describedby': 'closingTimeHelp'} }) }}
+                        {{ form_errors(form.closingTime) }}
+                        <div id="closingTimeHelp" class="form-text text-muted">Sélectionnez l'heure de fermeture au format HH:MM.</div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary btn-lg px-4">Enregistrer</button>
+                    <a href="{{ path('app_opening_hours') }}" class="btn btn-secondary btn-lg px-4">Retour</a>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
