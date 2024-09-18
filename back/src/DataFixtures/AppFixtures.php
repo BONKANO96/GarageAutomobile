@@ -4,6 +4,8 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Filesystem\Filesystem;
+use App\Entity\Car;
 use App\Entity\User;
 use App\Entity\Service;
 use App\Entity\OpeningHours; // Import de l'entité OpeningHours
@@ -96,6 +98,40 @@ class AppFixtures extends Fixture
                         ->setClosingTime($hoursData[2] === 'Fermé' ? null : $hoursData[2]);
 
             $manager->persist($openingHour);
+        }
+
+
+        // Création de 10 voitures avec Faker
+        $faker = Factory::create();
+        // Chemin relatif à l'intérieur du conteneur
+        $imagesDir = __DIR__.'/public/uploads/';
+
+        // Assurez-vous que le répertoire existe
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($imagesDir)) {
+            throw new \RuntimeException("Le répertoire des images n'existe pas : $imagesDir");
+        }
+
+        // Obtenez la liste des fichiers d'images dans le répertoire
+        $imageFiles = scandir($imagesDir);
+        $imageFiles = array_diff($imageFiles, ['.', '..']); // Éliminez les entrées '.' et '..'
+
+        for ($i = 0; $i < 10; $i++) {
+            $car = new Car();
+            $car->setPrice($faker->randomFloat(2, 5000, 50000));
+            $car->setYear($faker->year);
+            $car->setMileage($faker->numberBetween(10000, 200000));
+
+            // Choisissez une image aléatoire du répertoire
+            $randomImage = $faker->randomElement($imageFiles);
+            $car->setMainImageFilename($randomImage);
+
+            $car->setDescription($faker->paragraph);
+            $car->setGallery([$faker->randomElement($imageFiles)]);
+            $car->setFeatures(['Climatisation', 'GPS']);
+            $car->setOptions(['ABS', 'Airbags']);
+
+            $manager->persist($car);
         }
 
         // Flush pour sauvegarder les utilisateurs, services et horaires en base

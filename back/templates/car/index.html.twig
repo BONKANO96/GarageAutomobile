@@ -1,0 +1,37 @@
+{# templates/car/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Voitures d'occasion{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Liste des voitures d'occasion</h1>
+
+    <div class="mb-3">
+        <a href="{{ path('app_car_new') }}" class="btn btn-primary">Ajouter une voiture</a>
+    </div>
+
+    <div class="row">
+        {% for car in cars %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    {# Utilisez mainImageFilename au lieu de mainImage #}
+                    <img src="{{ asset('uploads/' ~ car.mainImageFilename) }}" class="card-img-top" alt="Image de {{ car.price }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.price }} €</h5>
+                        <p class="card-text">Année : {{ car.year }}<br>Kilométrage : {{ car.mileage }} km</p>
+                        <a href="{{ path('app_car_edit', { id: car.id }) }}" class="btn btn-secondary">Modifier</a>
+                        <form method="post" action="{{ path('app_car_delete', { id: car.id }) }}" style="display:inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette voiture ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ car.id) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>Aucune voiture disponible.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

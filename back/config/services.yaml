@@ -27,3 +27,7 @@ services:
         tags:
             - { name: doctrine.orm.entity_listener, event: prePersist, entity: App\Entity\User, method: prePersist }
             - { name: doctrine.orm.entity_listener, event: preUpdate, entity: App\Entity\User, method: preUpdate }
+
+# Add parameters section if not present
+parameters:
+    cars_images_directory: '%kernel.project_dir%/public/uploads/cars_images'
