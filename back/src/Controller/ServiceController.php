@@ -76,4 +76,11 @@ class ServiceController extends AbstractController
 
         return $this->redirectToRoute('app_service');
     }
+
+     // Nouvelle route pour afficher la liste des accessoires
+     #[Route('/accessories', name: 'app_accessory_list')]
+     public function accessoryList(): Response
+     {
+         return $this->render('service/list.html.twig');
+     }
 }

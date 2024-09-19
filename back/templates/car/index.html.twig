@@ -14,21 +14,31 @@
 
     <div class="row">
         {% for car in cars %}
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    {# Utilisez mainImageFilename au lieu de mainImage #}
-                    <img src="{{ asset('uploads/' ~ car.mainImageFilename) }}" class="card-img-top" alt="Image de {{ car.price }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ car.price }} €</h5>
-                        <p class="card-text">Année : {{ car.year }}<br>Kilométrage : {{ car.mileage }} km</p>
-                        <a href="{{ path('app_car_edit', { id: car.id }) }}" class="btn btn-secondary">Modifier</a>
-                        <form method="post" action="{{ path('app_car_delete', { id: car.id }) }}" style="display:inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette voiture ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ car.id) }}">
-                            <button class="btn btn-danger">Supprimer</button>
-                        </form>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 animate__animated animate__fadeInUp">
+                <img src="{{ asset('uploads/' ~ car.mainImageFilename) }}" class="img-fluid card-img-top" alt="{{ car.id }}">
+                <div class="card-body">
+                    <h5 class="card-title">Model {{ car.id }}</h5>
+                    <p class="card-text">{{ car.description }}</p>
+
+                    <ul class="list-inline">
+                        <li class="list-inline-item badge bg-warning text-dark">{{ car.year }}</li>
+                        <li class="list-inline-item badge bg-primary">{{ car.mileage }} km</li>
+                    </ul>
+
+                    <div class="mt-3">
+                        <p class="mb-0 text-muted">Prix : {{ car.price | number_format(2, ',', ' ') }} €</p>
                     </div>
                 </div>
+                <div class="card-footer">
+                    <a href="{{ path('app_car_edit', { id: car.id }) }}" class="btn btn-secondary">Modifier</a>
+                    <form method="post" action="{{ path('app_car_delete', { id: car.id }) }}" style="display:inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette voiture ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ car.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </div>
             </div>
+        </div>
         {% else %}
             <p>Aucune voiture disponible.</p>
         {% endfor %}

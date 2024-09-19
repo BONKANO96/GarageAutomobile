@@ -1,0 +1,95 @@
+{# templates/accessory/list.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Accessoires - Garage Vincent Parrot{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <!-- En-tête avec image et bouton -->
+    <div class="row mb-5 align-items-center">
+        <div class="col-md-6">
+            <h1 class="text-uppercase">Accessoires d'origine</h1>
+            <p class="lead">Découvrez une sélection exclusive d'accessoires conçus spécialement pour optimiser et personnaliser votre véhicule. Que vous soyez en quête de style, de confort ou de performance, chaque accessoire reflète la qualité que vous attendez de Vincent Parrot.</p>
+            <a href="#" class="btn btn-dark btn-lg">
+                <i class="bi bi-basket-fill"></i> Explorer tous nos accessoires
+            </a>
+        </div>
+        <div class="col-md-6">
+            <img src="{{ asset('images/accessories_header.jpg') }}" class="img-fluid rounded shadow" alt="Accessoires en vente">
+        </div>
+    </div>
+
+    <!-- Section accessoires avec les catégories (marques) -->
+    <div class="row text-center mb-5">
+        <div class="col-md-3">
+            <a href="#" class="btn btn-outline-dark w-100 py-3">
+                <i class="bi bi-car-front-fill fs-1"></i> <br> Accessoires VW
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="#" class="btn btn-outline-dark w-100 py-3">
+                <i class="bi bi-car-front-fill fs-1"></i> <br> Accessoires Audi
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="#" class="btn btn-outline-dark w-100 py-3">
+                <i class="bi bi-car-front-fill fs-1"></i> <br> Accessoires SEAT & CUPRA
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="#" class="btn btn-outline-dark w-100 py-3">
+                <i class="bi bi-car-front-fill fs-1"></i> <br> Accessoires SKODA
+            </a>
+        </div>
+    </div>
+
+    <!-- Section produits spécifiques -->
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <img src="{{ asset('images/bike_rack.jpg') }}" class="img-fluid rounded shadow-sm" alt="Attelage porte-vélos">
+            <p class="mt-3 text-muted">
+                <i class="bi bi-bicycle"></i> Attelage porte-vélos - Parfait pour vos aventures sur la route.
+            </p>
+            <p>Fixez vos vélos en toute simplicité et partez à l’aventure avec sécurité.</p>
+        </div>
+        <div class="col-md-6">
+            <h3><i class="bi bi-tire"></i> Des roues adaptées à chaque saison</h3>
+            <p>Conduisez en toute confiance avec nos ensembles de roues été et hiver, spécialement conçus pour garantir la meilleure adhérence en toute saison.</p>
+            <a href="#" class="btn btn-dark">
+                <i class="bi bi-arrow-right-circle"></i> Découvrez notre collection de roues
+            </a>
+        </div>
+    </div>
+
+    <!-- Produits d'entretien -->
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <h3 class="text-uppercase"><i class="bi bi-droplet-fill"></i> Produits d'entretien et de nettoyage</h3>
+            <p>Prolongez la durée de vie de votre véhicule avec notre gamme de produits de nettoyage d'origine. Prendre soin de votre voiture n'a jamais été aussi facile et efficace.</p>
+        </div>
+        <div class="col-md-12">
+            <img src="{{ asset('images/cleaning_products.jpg') }}" class="img-fluid rounded shadow-sm" alt="Produits d'entretien">
+        </div>
+    </div>
+
+    <!-- Grille d'accessoires -->
+    <div class="row text-center">
+        <div class="col-md-4">
+            <img src="{{ asset('images/roof_rack.jpg') }}" class="img-fluid rounded shadow-sm mb-3" alt="Galeries de toit">
+            <h5><i class="bi bi-box2-fill"></i> Galeries de toit & coffres</h5>
+            <p>Parfait pour les voyages en famille ou les longs trajets. Augmentez votre espace de rangement en toute simplicité.</p>
+        </div>
+        <div class="col-md-4">
+            <img src="{{ asset('images/car_mats.jpg') }}" class="img-fluid rounded shadow-sm mb-3" alt="Tapis et plateaux">
+            <h5><i class="bi bi-check2-square"></i> Tapis et plateaux en caoutchouc</h5>
+            <p>Protégez l’intérieur de votre véhicule avec nos tapis de haute qualité, spécialement conçus pour chaque modèle.</p>
+        </div>
+        <div class="col-md-4">
+            <img src="{{ asset('images/fridge.jpg') }}" class="img-fluid rounded shadow-sm mb-3" alt="Glacière thermoelectrique">
+            <h5><i class="bi bi-thermometer"></i> Glacière thermoelectrique</h5>
+            <p>Gardez vos boissons et aliments au frais lors de vos longs trajets avec nos glacières portables de qualité supérieure.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

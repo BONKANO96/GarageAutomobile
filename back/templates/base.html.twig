@@ -1,48 +1,266 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Garage V. Parrot{% endblock %}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>{#
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ path('home') }}">Garage V. Parrot</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('home') }}">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('services') }}">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('vehicles') }}">Véhicules</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('contact') }}">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </nav>#}
-    <div class="container">
-        {% block body %}{% endblock %}
-    </div>
+
+    <!-- Intégration de Bootstrap et des icônes Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
+
     
 
-    <footer>
-        <div class="container">
-            <h5>Horaires d'Ouverture</h5>
-            <ul>
-                {% set opening_hours = get_opening_hours() %}
-                {% for openingHour in opening_hours %}
-                    <li>{{ openingHour.day }}: {{ openingHour.openingTime|date('H:i') }} - {{ openingHour.closingTime|date('H:i') }}</li>
-                {% else %}
-                    <li>Aucun horaire défini.</li>
-                {% endfor %}
-            </ul>
+    
+    <style>
+        /* Style pour le header Garage Vincent Parrot */
+        .garage-header {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background: transparent;
+            padding: 20px;
+            display: flex;
+            justify-content: center; /* Centrer la navbar */
+            align-items: center;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+
+        .navbar {
+            width: 100%;
+        }
+
+        .navbar-brand img {
+            width: 120px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar-nav .nav-item .nav-link {
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .navbar .icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .icons a {
+            text-decoration: none;
+            color: #000;
+            font-size: 1.5rem;
+        }
+
+        /* Style pour la section hero avec background image */
+        .hero {
+            background-image: url('{{ asset('images/business-parking-empty-carpark-abstract.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+
+        /* Style pour le footer */
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        footer h5 {
+            font-weight: bold;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer ul li {
+            margin: 5px 0;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 991px) {
+            .navbar-nav {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .navbar .icons {
+                margin-top: 15px;
+            }
+
+            .navbar .icons a {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .navbar-brand img {
+                width: 100px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    {# Header #}
+    <header class="garage-header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{{ path('home') }}">
+                Garage V. Parrot
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav"> <!-- Align items to the right -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('home') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_service') }}">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_car_index') }}">Véhicules</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="icons d-none d-lg-flex ms-auto"> <!-- Align icons to the right on large screens -->
+                <a href="#"><i class="bi bi-info-circle"></i></a>
+                <a href="#"><i class="bi bi-envelope"></i></a>
+                <a href="{{ path('security.login') }}"><i class="bi bi-person"></i></a>
+            </div>
+        </nav>
+    </header>
+
+    {# Section principale pour afficher une image de fond et le contenu hero #}
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Garage Vincent Parrot</h1>
+            <p>Professionnels à votre service pour l'entretien et la réparation de vos véhicules</p>
         </div>
-    </footer>
+    </section>
+
+    {# Corps du site #}
+    <div class="container mt-5">
+        {% block body %}{% endblock %}
+    </div>
+
+    {# Footer avec les horaires d'ouverture #}
+    <footer class="bg-light py-5 mt-auto">
+    <div class="container">
+        <div class="row">
+            <!-- Section Horaires d'ouverture -->
+            <div class="col-md-4">
+                <h5 class="mb-4"><strong>Garage Vincent Parrot</strong></h5>
+                <h6>Horaires d'Ouverture</h6>
+                <ul class="list-unstyled">
+                    {% set opening_hours = get_opening_hours() %}
+                    {% for openingHour in opening_hours %}
+                        <li>{{ openingHour.day }}: {{ openingHour.openingTime|date('H:i') }} - {{ openingHour.closingTime|date('H:i') }}</li>
+                    {% else %}
+                        <li>Aucun horaire défini.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Section Liens Vite à -->
+            <div class="col-md-2">
+                <h5 class="fw-bold">Vite à</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-dark">Nos services</a></li>
+                    <li><a href="#" class="text-dark">Voitures d'occasion</a></li>
+                    <li><a href="#" class="text-dark">Contactez-nous</a></li>
+                    <li><a href="#" class="text-dark">Équipe</a></li>
+                    <li><a href="#" class="text-dark">Devis en ligne</a></li>
+                </ul>
+            </div>
+
+            <!-- Section Marques proposées -->
+            <div class="col-md-3">
+                <h5 class="fw-bold">Marques proposées</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-dark">Peugeot</a></li>
+                    <li><a href="#" class="text-dark">Renault</a></li>
+                    <li><a href="#" class="text-dark">Citroën</a></li>
+                    <li><a href="#" class="text-dark">Toyota</a></li>
+                    <li><a href="#" class="text-dark">Ford</a></li>
+                </ul>
+            </div>
+
+            <!-- Section Contact -->
+            <div class="col-md-3">
+                <h5 class="fw-bold">Contact</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-dark">Entretien et réparation</a></li>
+                    <li><a href="#" class="text-dark">Carrosserie</a></li>
+                    <li><a href="#" class="text-dark">Essai routier</a></li>
+                    <li><a href="#" class="text-dark">Devis personnalisés</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section Réseaux sociaux et mentions légales -->
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <p class="text-muted mb-0">Suivez-nous sur nos réseaux sociaux !</p>
+                <a href="#"><i class="bi bi-facebook me-3"></i></a>
+                <a href="#"><i class="bi bi-instagram me-3"></i></a>
+                <a href="#"><i class="bi bi-linkedin me-3"></i></a>
+                <a href="#"><i class="bi bi-youtube me-3"></i></a>
+            </div>
+
+            <div class="col-md-8 text-md-end">
+                <p class="text-muted mb-0">&copy; 2024 Garage Vincent Parrot</p>
+                <div class="d-inline-block mt-2">
+                    <a href="#" class="text-muted me-3">Déclaration de confidentialité</a>
+                    <a href="#" class="text-muted me-3">Conditions de vente</a>
+                    <a href="#" class="text-muted me-3">Dispositions légales</a>
+                    <a href="#" class="text-muted">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- Script Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>

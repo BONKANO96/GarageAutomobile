@@ -5,6 +5,8 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Filesystem\Filesystem;
+use App\Entity\Contact;
+
 use App\Entity\Car;
 use App\Entity\User;
 use App\Entity\Service;
@@ -66,10 +68,12 @@ class AppFixtures extends Fixture
 
         // Création des services proposés par le garage
         $services = [
-            ['Réparations mécaniques', 'Réparation de tout type de pannes mécaniques pour tous types de véhicules.'],
-            ['Entretien de véhicules', 'Services d’entretien régulier incluant les vidanges, les contrôles des freins, et les révisions.'],
-            ['Vente de véhicules d\'occasion', 'Large gamme de véhicules d’occasion en vente avec contrôle technique assuré.'],
-            ['Prise en charge spéciale', 'Service de prise en charge sur mesure pour répondre aux besoins spécifiques des clients.']
+            ['Entretien et réparation', 'bi bi-tools'],
+            ['Carrosserie', 'bi bi-car-front'],
+            ['Revêtements de voiture', 'bi bi-paint-bucket'],
+            ['Dommages aux fenêtres', 'bi bi-window'],
+            ['Accessoires', 'bi bi-bag'],
+            ['Vendez votre propre voiture', 'bi bi-cash']
         ];
 
         foreach ($services as $serviceData) {
@@ -98,6 +102,24 @@ class AppFixtures extends Fixture
                         ->setClosingTime($hoursData[2] === 'Fermé' ? null : $hoursData[2]);
 
             $manager->persist($openingHour);
+        }
+
+
+        // Générer plusieurs contacts
+
+        $faker = Factory::create('fr_FR');
+        
+        for ($i = 0; $i < 10; $i++) {
+            $contact = new Contact();
+            $contact->setNom($faker->lastName)
+                    ->setPrenom($faker->firstName)
+                    ->setEmail($faker->email)
+                    ->setTelephone($faker->phoneNumber)
+                    ->setSujet($faker->sentence(3))
+                    ->setMessage($faker->paragraph(3));
+
+            // Persister l'entité
+            $manager->persist($contact);
         }
 
 

@@ -21,6 +21,32 @@ class CarRepository extends ServiceEntityRepository
         return $this->findBy([], ['id' => 'ASC']);
     }
 
+    public function findFilteredCars($minPrice, $maxPrice, $minYear, $maxYear, $minMileage, $maxMileage)
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        if ($minPrice) {
+            $qb->andWhere('c.price >= :minPrice')->setParameter('minPrice', $minPrice);
+        }
+        if ($maxPrice) {
+            $qb->andWhere('c.price <= :maxPrice')->setParameter('maxPrice', $maxPrice);
+        }
+        if ($minYear) {
+            $qb->andWhere('c.year >= :minYear')->setParameter('minYear', $minYear);
+        }
+        if ($maxYear) {
+            $qb->andWhere('c.year <= :maxYear')->setParameter('maxYear', $maxYear);
+        }
+        if ($minMileage) {
+            $qb->andWhere('c.mileage >= :minMileage')->setParameter('minMileage', $minMileage);
+        }
+        if ($maxMileage) {
+            $qb->andWhere('c.mileage <= :maxMileage')->setParameter('maxMileage', $maxMileage);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findCarsByPriceRange(float $minPrice, float $maxPrice): array
     {
         return $this->createQueryBuilder('c')

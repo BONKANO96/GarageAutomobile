@@ -142,4 +142,26 @@ class CarController extends AbstractController
 
         return $this->redirectToRoute('app_car_index');
     }
+
+    #[Route('/car_list', name: 'car_list')]
+    public function list(CarRepository $carRepository, Request $request)
+    {
+        // Récupérer les filtres du formulaire
+        $minPrice = $request->query->get('min_price');
+        $maxPrice = $request->query->get('max_price');
+        $minYear = $request->query->get('min_year');
+        $maxYear = $request->query->get('max_year');
+        $minMileage = $request->query->get('min_mileage');
+        $maxMileage = $request->query->get('max_mileage');
+
+        // Appliquer les filtres dans le repository
+        $cars = $carRepository->findFilteredCars($minPrice, $maxPrice, $minYear, $maxYear, $minMileage, $maxMileage);
+
+        return $this->render('car/list.html.twig', [
+            'cars' => $cars,
+        ]);
+    }
+
+
+
 }

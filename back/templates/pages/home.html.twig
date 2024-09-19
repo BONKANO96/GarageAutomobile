@@ -13,39 +13,87 @@
 
     <section class="text-center py-5 animate__animated animate__fadeInUp">
         <h2 class="mb-4">Nos Services</h2>
-        <div class="row">
-            {% for service in services %}
-                <div class="col-md-4 animate__animated animate__zoomIn" style="animation-delay: {{ loop.index * 0.2 }}s;">
-                    <div class="card border-0 shadow">
-                        {#<img src="path/to/your/{{ service.nom|lower|replace({' ': '-'}) }}.jpg" class="card-img-top" alt="{{ service.nom }}">#}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ service.nom }}</h5>
-                            <p class="card-text">{{ service.description }}</p>
+
+        <div id="servicesCarousel" class="carousel slide">
+            <div class="carousel-inner">
+                {% set chunkSize = 3 %}
+                {% set servicesChunks = services|batch(chunkSize) %}
+                {% for chunk in servicesChunks %}
+                    <div class="carousel-item {{ loop.first ? 'active' : '' }}">
+                        <div class="row">
+                            {% for service in chunk %}
+                                <div class="col-md-4 animate__animated animate__zoomIn" style="animation-delay: {{ loop.index * 0.2 }}s;">
+                                    <div class="card border-0 shadow h-100">
+                                        <div class="card-body text-center">
+                                            <!-- Afficher l'icône Bootstrap à partir de la description du service -->
+                                            <i class="{{ service.description }} display-4 mb-4"></i>
+                                            <h5 class="card-title">{{ service.nom }}</h5>
+                                            <!-- Bouton découvrir sous chaque service {#{{ path('service_detail', {id: service.id}) }}#} -->
+                                            <a href="#" class="btn btn-primary mt-3">Découvrir</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
-                </div>
-            {% else %}
-                <div class="col-12 text-center">
-                    <p>Aucun service disponible pour le moment.</p>
-                </div>
-            {% endfor %}
+                {% else %}
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <p>Aucun service disponible pour le moment.</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#servicesCarousel" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Précédent</span>
+            </a>
+            <a class="carousel-control-next" href="#servicesCarousel" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Suivant</span>
+            </a>
         </div>
-        {# <a href="{{ path('services') }}" class="btn btn-primary btn-lg mt-4 animate__animated animate__fadeInUp" style="animation-delay: 0.8s;">Voir tous les Services</a> #}
     </section>
+
+
 
     <section class="text-center bg-light py-5 animate__animated animate__fadeInUp">
         <h2 class="mb-4">Véhicules d'Occasion</h2>
         <p class="mb-5">Découvrez notre sélection de véhicules d'occasion de qualité, soigneusement inspectés et prêts à rouler.</p>
+
         <div class="row">
-            <div class="col-md-6 animate__animated animate__fadeInLeft">
-                <img src="path/to/your/vehicle1.jpg" class="img-fluid mb-3" alt="Véhicule 1">
+            {% for car in cars %}
+            <div class="col-md-4 mb-4 animate__animated animate__fadeInUp">
+                <div class="card h-100">
+                    <img src="{{ asset('uploads/' ~ car.mainImageFilename) }}" class="img-fluid card-img-top" alt="{{ car.id }}">
+                    <div class="card-body">
+                        <h5 class="card-title">Model {{ car.id }}</h5>
+                        <p class="card-text">{{ car.description }}</p>
+
+                        <ul class="list-inline">
+                            <li class="list-inline-item badge bg-warning text-dark">{{ car.year }}</li>
+                            <li class="list-inline-item badge bg-primary">{{ car.mileage }} km</li>
+                        </ul>
+
+                        <div class="mt-3">
+                            <p class="mb-0 text-muted">Prix : {{ car.price | number_format(2, ',', ' ') }} €</p>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="#" class="btn btn-info">Voir les détails</a>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 animate__animated animate__fadeInRight">
-                <img src="path/to/your/vehicle2.jpg" class="img-fluid mb-3" alt="Véhicule 2">
-            </div>
+            {% else %}
+                <p>Aucune voiture d'occasion n'est disponible actuellement.</p>
+            {% endfor %}
         </div>
-        {# <a href="{{ path('vehicles') }}" class="btn btn-primary btn-lg mt-4 animate__animated animate__fadeInUp">Voir les Véhicules</a> #}
+
+        <a href="{{ path('car_list') }}" class="btn btn-primary btn-lg mt-4 animate__animated animate__fadeInUp">Voir plus de véhicules</a>
     </section>
+
 
     <section class="text-center py-5 animate__animated animate__fadeInUp">
         <h2 class="mb-4">Contactez-Nous</h2>
